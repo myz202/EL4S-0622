@@ -7,7 +7,7 @@ public class Block : MonoBehaviour
     bool fall = false;
     Rigidbody2D rd;
     bool isOk = false;
-
+    public int score = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +36,19 @@ public class Block : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             fall = true;
-            
-        }
 
+        }
         if (fall && !isOk)
         {
             otherScript.redy = true;
             isOk = true;
         }
     }
+
+    public int AddScore()
+    {
+        return score;
+    }
+
 }
+
