@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [SerializeField]
-    Text scoreText;
+    [SerializeField] Text scoreText;
 
-    static private int score = 0;
-    private int addScore = 0;
+    static public int score = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,17 +20,13 @@ public class Score : MonoBehaviour
         scoreText.text = "—˜‰v:" + score;
     }
 
-    void CulcScore()
+    static public void CulcScore(int addScore)
     {
-        addScore = 0;
         score += addScore;
-        addScore = 0;
     }
     
-    void DescreaseScore()
+    static public void DecreaseScore(int addScore)
     {
-        addScore = 0;
         score -= addScore;
-        addScore = 0;
     }
 }
