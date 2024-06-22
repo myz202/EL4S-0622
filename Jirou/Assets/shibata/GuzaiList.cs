@@ -15,11 +15,6 @@ public class GuzaiList : MonoBehaviour
         num = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
 
     public int AddList(GameObject obj)
     {
@@ -29,9 +24,10 @@ public class GuzaiList : MonoBehaviour
         return num;
     }
 
-    public void DeleteList(int num)
+    public void DeleteList(int n)
     {
-        Debug.Log("delete = " + num);
-        generatedObjects.RemoveAt(num);
+        Debug.Log("delete = " + n);
+        generatedObjects.RemoveAt(n);
+        num--;
     }
 }

@@ -91,6 +91,17 @@ public class Block : MonoBehaviour
         return score;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public void EatProc()
+    {
+
+
+        Destroy(this);
+    }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!already && fall)
