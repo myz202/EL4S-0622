@@ -15,6 +15,9 @@ public class SR_Guest : MonoBehaviour
     /// <summary> 通常待機時間  </summary>
     [SerializeField] [Header("通常待機時間")] private float _standbyTime;
 
+    /// <summary> フィーバー時待機時間  </summary>
+    [SerializeField] [Header("フィーバー時待機時間")] private float _feverStandbyTime;
+
     /// <summary> 開始待機終了フラグ </summary>
     private bool _standby;
 
@@ -27,7 +30,7 @@ public class SR_Guest : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_standby)
+        if (!_standby)//スタンバイ前は処理しない
         {
             return;
         }
@@ -69,6 +72,9 @@ public class SR_Guest : MonoBehaviour
         //===============
 
         foodList.RemoveAt(num);//食べられた要素削除
+
+        _standby = false;//スタンバイフラグを落とす
+        StartCoroutine(Standby());//スタンバイコルーチン
     }
 
 
@@ -96,6 +102,10 @@ public class SR_Guest : MonoBehaviour
     private IEnumerator Standby()
     {
         float elapsedTime = 0.0f; // 経過時間
+
+        //if(){} //フィーバー
+        //else{} //通常
+
         while (elapsedTime < _standbyTime)
         {
             elapsedTime += Time.deltaTime;
