@@ -9,28 +9,30 @@ using UnityEngine;
 
 public class SR_Guest : MonoBehaviour
 {
+    [SerializeField] [Header("Feverスクリプト")] private GaugeManager sr_gm;
+
     /// <summary> 開始待機時間  </summary>
-    [SerializeField] [Header("開始待機時間")] private float _startStandbyTime;
+    [SerializeField] [Header("開始待機時間")] private float startStandbyTime;
 
     /// <summary> 通常待機時間  </summary>
-    [SerializeField] [Header("通常待機時間")] private float _standbyTime;
+    [SerializeField] [Header("通常待機時間")] private float standbyTime;
 
     /// <summary> フィーバー時待機時間  </summary>
-    [SerializeField] [Header("フィーバー時待機時間")] private float _feverStandbyTime;
+    [SerializeField] [Header("フィーバー時待機時間")] private float feverStandbyTime;
 
     /// <summary> 開始待機終了フラグ </summary>
-    private bool _standby;
+    private bool standby;
 
     private void Start()
     {
-        _standby = false;
+        standby = false;
         StartCoroutine(StartStandby());
     }
 
 
     private void FixedUpdate()
     {
-        if (!_standby)//スタンバイ前は処理しない
+        if (!standby)//スタンバイ前は処理しない
         {
             return;
         }
@@ -73,7 +75,7 @@ public class SR_Guest : MonoBehaviour
 
         foodList.RemoveAt(num);//食べられた要素削除
 
-        _standby = false;//スタンバイフラグを落とす
+        standby = false;//スタンバイフラグを落とす
         StartCoroutine(Standby());//スタンバイコルーチン
     }
 
@@ -85,13 +87,13 @@ public class SR_Guest : MonoBehaviour
     private IEnumerator StartStandby()
     {
         float elapsedTime = 0.0f; // 経過時間
-        while (elapsedTime < _startStandbyTime)
+        while (elapsedTime < startStandbyTime)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        _standby = true;
+        standby = true;
     }
 
 
@@ -102,17 +104,19 @@ public class SR_Guest : MonoBehaviour
     private IEnumerator Standby()
     {
         float elapsedTime = 0.0f; // 経過時間
+        float limitTime = 0.0f;
 
-        //if(){} //フィーバー
-        //else{} //通常
+        if (sr_gm.GetFever()) { limitTime = feverStandbyTime; }
+        else { limitTime = standbyTime; }
+       
 
-        while (elapsedTime < _standbyTime)
+        while (elapsedTime < limitTime)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        _standby = true;
+        standby = true;
     }
 
 }
