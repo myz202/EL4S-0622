@@ -45,35 +45,32 @@ public class SR_Guest : MonoBehaviour
     /// </summary>
     private void EatProc()
     {
-        List<GameObject> foodList = new List<GameObject>();
+        GameObject obj = FindAnyObjectByType<GuzaiList>().gameObject;
+        GuzaiList gl = obj.GetComponent<GuzaiList>();
 
-        //=================//
-        //食べ物コンテナ確保
-        //================//
-        if(foodList.Count <= 0)
+        if(gl.generatedObjects.Count <= 0)
         {
             return;
         }
 
         GameObject bottomObj;
         int num = 0;
-        bottomObj = foodList[num];
+        bottomObj = gl.generatedObjects[num];
 
-        for(int i = 1; i < foodList.Count; i++)
+        for(int i = 1; i < gl.generatedObjects.Count; i++)
         {
-            if (foodList[i].transform.position.y < bottomObj.transform.position.y)
+            if (gl.generatedObjects[i].transform.position.y < bottomObj.transform.position.y)
             {
-                bottomObj = foodList[i];
+                bottomObj = gl.generatedObjects[i];
                 num = i;
             }
         }
 
         //===============
         // 食べ物のメソッド呼び出し
-        // 
-        //===============
-
-        foodList.RemoveAt(num);//食べられた要素削除
+        Sound.SR_SoundManager.instance.PlaySE(Sound.SE_Type.EAT);
+        gl.generatedObjects[num].GetComponent<Block>().EatProc();
+        gl.DeleteList(num);//食べられた要素削除
 
         standby = false;//スタンバイフラグを落とす
         StartCoroutine(Standby());//スタンバイコルーチン
@@ -94,6 +91,7 @@ public class SR_Guest : MonoBehaviour
         }
 
         standby = true;
+        Sound.SR_SoundManager.instance.PlaySE(Sound.SE_Type.GUEST_STANDBY);
     }
 
 

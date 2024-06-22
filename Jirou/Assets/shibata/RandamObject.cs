@@ -8,18 +8,27 @@ public class RandamObject : MonoBehaviour
 
     public GameObject[] blockPrefabs; // プレハブの配列
     public bool redy = true;
+    public float interval = 1.0f;
 
+    public int randomIndexNext;
+    public int randomIndex;
 
+    GameObject camera;
+    GuzaiList guzaiList;
     void Start()
     {
-        // ランダムなインデックスを選択
+        GameObject guzaiListObject = GameObject.Find("GameManager");
+        camera = GameObject.Find("Main Camera");
 
+        if (guzaiListObject != null)
+        {
+            guzaiList = guzaiListObject.GetComponent<GuzaiList>();
+        }
 
-        //int randomIndex = Random.Range(0, blockPrefabs.Length);
-
-        // プレハブを生成して(0,0)に配置
-        //Instantiate(blockPrefabs[randomIndex], Vector2.zero, Quaternion.identity);
-
+        randomIndexNext = Random.Range(0, blockPrefabs.Length);
+        randomIndex = randomIndexNext;
+        //Debug.Log("first" + randomIndexNext);
+       // StartCoroutine(MyCoroutine(0));
     }
 
 
@@ -29,30 +38,29 @@ public class RandamObject : MonoBehaviour
     {
         if (redy)
         {
-            //Debug.Log(CheckAllBlockObjectsStopped());
-
-            int randomIndex = Random.Range(0, blockPrefabs.Length);
-
-            Instantiate(blockPrefabs[randomIndex], Vector2.zero, Quaternion.identity);
-            redy = false;
+            StartCoroutine(MyCoroutine(interval));
         }
-
-
     }
 
-    bool CheckAllBlockObjectsStopped()
+    IEnumerator MyCoroutine(float f)
     {
-        GameObject[] blockObjects = GameObject.FindGameObjectsWithTag("Guzai"); // "Block" タグを持つオブジェクトを全て取得
+        redy = false;
 
-        foreach (GameObject obj in blockObjects)
-        {
-            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-            if (rb != null && rb.velocity.magnitude >= 0.001f)
-            {
-                return false; // 条件を満たさないオブジェクトが見つかった場合、falseを返す
-            }
-        }
+        yield return new WaitForSeconds(f);
 
-        return true; // 全てのオブジェクトが条件を満たす場合、trueを返す
+        randomIndex = randomIndexNext;
+
+        GameObject newObject = Instantiate(blockPrefabs[randomIndex], new Vector2(0,camera.transform.position.y), Quaternion.identity);
+
+        randomIndexNext = Random.Range(0, blockPrefabs.Length);
+
+       // Debug.Log(randomIndexNext);
+
+        //guzaiList.generatedObjects.Add(newObject);
+
+        
+
+
     }
+
 }
