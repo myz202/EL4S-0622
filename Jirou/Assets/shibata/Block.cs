@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Block : MonoBehaviour
 {
@@ -9,17 +11,41 @@ public class Block : MonoBehaviour
     bool isOk = false;
     public int score = 100;
     // Start is called before the first frame update
+    GuzaiList guzaiList;
+    Vector2 m_pos;
+    GameObject camera;
+    public float speed = 0.004f;
+    bool already = false;
+    GameObject guzaiListObject;
+    int num;
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
         rd.velocity = Vector3.zero;
+        guzaiListObject = GameObject.Find("GameManager");
+        camera = GameObject.Find("Main Camera");
+        m_pos = Vector2.zero;
+
+        if (guzaiListObject != null)
+        {
+            guzaiList = guzaiListObject.GetComponent<GuzaiList>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 m_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        m_pos.y = 0;
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            m_pos.x -= speed;
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            m_pos.x += speed;
+        }
+
+      
         RandamObject otherScript = FindObjectOfType<RandamObject>();
 
         //if (otherScript != null)
@@ -29,12 +55,17 @@ public class Block : MonoBehaviour
 
         if (!fall)
         {
+            m_pos.y = camera.transform.position.y + 4;
             transform.position = m_pos;
             rd.velocity = Vector3.zero;
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetKeyDown(KeyCode.Space))
+        { 
+            if(!fall)
+            {
+                gameObject.tag = "Guzai";
+            }
             fall = true;
 
         }
@@ -42,6 +73,16 @@ public class Block : MonoBehaviour
         {
             otherScript.redy = true;
             isOk = true;
+            
+        }
+
+        if(transform.position.y <= -8)
+        {
+            if (already)
+            {
+                guzaiList.DeleteList(num);
+            }
+            Destroy(gameObject);
         }
     }
 
@@ -49,6 +90,19 @@ public class Block : MonoBehaviour
     {
         return score;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!already && fall)
+        {
+            num = guzaiList.AddList(gameObject);
+            num -= 1;
+            Debug.Log(num);
+            already =true;
+        }
+    }
+
+
 
 }
 

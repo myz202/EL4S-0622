@@ -13,10 +13,13 @@ public class RandamObject : MonoBehaviour
     public int randomIndexNext;
     public int randomIndex;
 
-    public GuzaiList guzaiList;
+    GameObject camera;
+    GuzaiList guzaiList;
     void Start()
     {
         GameObject guzaiListObject = GameObject.Find("GameManager");
+        camera = GameObject.Find("Main Camera");
+
         if (guzaiListObject != null)
         {
             guzaiList = guzaiListObject.GetComponent<GuzaiList>();
@@ -24,7 +27,8 @@ public class RandamObject : MonoBehaviour
 
         randomIndexNext = Random.Range(0, blockPrefabs.Length);
         randomIndex = randomIndexNext;
-        Debug.Log("first" + randomIndexNext);
+        //Debug.Log("first" + randomIndexNext);
+       // StartCoroutine(MyCoroutine(0));
     }
 
 
@@ -34,42 +38,25 @@ public class RandamObject : MonoBehaviour
     {
         if (redy)
         {
-            StartCoroutine(MyCoroutine());
+            StartCoroutine(MyCoroutine(interval));
         }
     }
 
-    //bool CheckAllBlockObjectsStopped()
-    //{
-    //    GameObject[] blockObjects = GameObject.FindGameObjectsWithTag("Guzai"); // "Block" タグを持つオブジェクトを全て取得
-
-    //    foreach (GameObject obj in blockObjects)
-    //    {
-    //        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-    //        if (rb != null && rb.velocity.magnitude >= 0.001f)
-    //        {
-    //            return false; // 条件を満たさないオブジェクトが見つかった場合、falseを返す
-    //        }
-    //    }
-
-    //    return true; // 全てのオブジェクトが条件を満たす場合、trueを返す
-    //}
-
-
-    IEnumerator MyCoroutine()
+    IEnumerator MyCoroutine(float f)
     {
         redy = false;
 
-        yield return new WaitForSeconds(interval);
+        yield return new WaitForSeconds(f);
 
         randomIndex = randomIndexNext;
 
-        GameObject newObject = Instantiate(blockPrefabs[randomIndex], Vector2.zero, Quaternion.identity);
+        GameObject newObject = Instantiate(blockPrefabs[randomIndex], new Vector2(0,camera.transform.position.y), Quaternion.identity);
 
         randomIndexNext = Random.Range(0, blockPrefabs.Length);
 
-        Debug.Log(randomIndexNext);
+       // Debug.Log(randomIndexNext);
 
-        guzaiList.generatedObjects.Add(newObject);
+        //guzaiList.generatedObjects.Add(newObject);
 
         
 
