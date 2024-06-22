@@ -49,8 +49,11 @@ public class GaugeManager : MonoBehaviour
         }
     }
 
-    // 外部から呼び出してゲージを増減させる関数
-    public void ModifyGauge(float amount)
+    /// <summary>
+    /// ゲージに値を追加!!!
+    /// </summary>
+    /// <returns></returns>
+    public void AddGauge(float amount)
     {
         currentValue += amount;
         if (currentValue > maxValue)
@@ -71,8 +74,12 @@ public class GaugeManager : MonoBehaviour
         slider.value = currentValue;
     }
 
-    public void SetFever(bool value)
+    /// <summary>
+    /// フィーバー状態のフラグをゲット!!!
+    /// </summary>
+    /// <returns></returns>
+    public bool GetFever()
     {
-        fever = value;
+        return fever;
     }
 }
