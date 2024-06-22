@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2742701246564913712}
   - component: {fileID: 2570200768159391521}
+  - component: {fileID: -1530126042185672073}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -44,5 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247cafba636f5bc44850f02333e834a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPrefabs: []
+  blockPrefabs:
+  - {fileID: 4349534953340109653, guid: 4aceab9f1cde05243b3f47af107907e4, type: 3}
+  - {fileID: 228416353499483247, guid: 5ef92c855406df841bd25855fdd7b083, type: 3}
+  - {fileID: 417551439049721915, guid: c311a686b14a4074b9dd11fd0d6b4e01, type: 3}
   redy: 1
+  interval: 1
+--- !u!114 &-1530126042185672073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5871722972960902331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b41921ac2e7514eb8c165f44724a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Guzai
+  prefabs: []
