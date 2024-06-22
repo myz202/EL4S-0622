@@ -19,6 +19,7 @@ namespace Sound
         FEVER,
         RESULT,
     }
+
     /// <summary>
     /// Œø‰Ê‰¹ enum
     /// </summary>
@@ -28,6 +29,7 @@ namespace Sound
         EAT,
         GUEST_STANDBY,
         TIME_UP,
+        DELICIOUS,
     }
 
     public class SR_SoundManager : MonoBehaviour
