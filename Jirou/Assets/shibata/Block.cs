@@ -66,6 +66,7 @@ public class Block : MonoBehaviour
             {
                 gameObject.tag = "Guzai";
             }
+            Sound.SR_SoundManager.instance.PlaySE(Sound.SE_Type.CLICK);
             fall = true;
 
         }
@@ -96,7 +97,9 @@ public class Block : MonoBehaviour
     /// </summary>
     public void EatProc()
     {
-
+        Score.score += score;
+        GaugeManager gm = FindObjectOfType<GaugeManager>();
+        gm.AddGauge(2.5f);
 
         Destroy(this);
     }

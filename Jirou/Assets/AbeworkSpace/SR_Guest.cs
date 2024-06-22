@@ -68,9 +68,7 @@ public class SR_Guest : MonoBehaviour
 
         //===============
         // 食べ物のメソッド呼び出し
-        // 
-        //===============
-
+        Sound.SR_SoundManager.instance.PlaySE(Sound.SE_Type.EAT);
         gl.generatedObjects[num].GetComponent<Block>().EatProc();
         gl.DeleteList(num);//食べられた要素削除
 
@@ -93,6 +91,7 @@ public class SR_Guest : MonoBehaviour
         }
 
         standby = true;
+        Sound.SR_SoundManager.instance.PlaySE(Sound.SE_Type.GUEST_STANDBY);
     }
 
 

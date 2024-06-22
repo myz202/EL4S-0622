@@ -23,6 +23,7 @@ public class TimeLimit : MonoBehaviour
         text.text = ("Žc‚è ") + time.ToString("F1");
         if(time <= 0)
         {
+            Sound.SR_SoundManager.instance.PlaySE(Sound.SE_Type.TIME_UP);
             SceneManager.LoadScene(sceneName);
         }
     }
